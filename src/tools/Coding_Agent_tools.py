@@ -1,7 +1,7 @@
 from langchain.tools import tool
 
 @tool("Code_Generator")
-def Code_Generator(query: str):
+def Code_Generator(query: str)-> str:
     """
     Tool Name: Code_Generator
 

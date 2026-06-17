@@ -1,7 +1,7 @@
 from langchain.tools import tool
 
 @tool
-def Search_Tool(query: str):
+def Search_Tool(query: str)->str:
     """
     Perform a comprehensive web search to gather information from multiple
     online sources.
