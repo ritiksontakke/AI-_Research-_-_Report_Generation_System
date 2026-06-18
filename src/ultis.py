@@ -1,6 +1,7 @@
 from langchain_groq import ChatGroq
 from langchain_google_genai import ChatGoogleGenerativeAI
 from dotenv import load_dotenv
+from langchain_openai import ChatOpenAI
 from langsmith import Client
 import os
 
@@ -28,3 +29,14 @@ def get_gemini_api():
         google_api_key=os.getenv("GOOGLE_API_KEY"),
         temperature = 0
     )
+def get_openai_model():
+    return ChatOpenAI(
+        model="gpt-5.4-nano",
+        api_key=os.getenv("OPENAI_API_KEY"),
+        max_tokens=500,
+        temperature=0
+    )
+
+def get_model():
+    # return get_openai_model()
+    pass

@@ -9,6 +9,7 @@ orchestrator = get_OrchestratorAgent()
 
 class QueryRequest(BaseModel):
     query : str
+    thread_id: str
 
 @router.get("/")
 def home():
@@ -25,9 +26,11 @@ def execute_agent(request: QueryRequest):
                     "content" : request.query
                 }
             ]
-        }
+        },
+        config={"configurable": {"thread_id": request.thread_id}},
     )
     return{
         "query": request.query,
         "response" : result["messages"][-1].content
     }
+

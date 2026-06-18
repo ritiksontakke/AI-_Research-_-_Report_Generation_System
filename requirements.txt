@@ -7,3 +7,4 @@ langchain-core
 fastapi
 python-dotenv
 langchain-groq
+langchain[openai]
