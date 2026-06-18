@@ -1,68 +1,56 @@
 from langchain.tools import tool
 
 @tool("Code_Generator")
-def Code_Generator(query: str)-> str:
+def Code_Generator(query: str) -> str:
     """
-    Tool Name: Code_Generator
-
-    Use this tool to generate source code based on user requirements.
-
-    When to use:
-    - User requests code implementation.
-    - User wants a function, class, script, or application.
-    - User asks for code in a specific programming language.
-    - User wants example code for a concept or feature.
+    Generate source code based on the user's natural language request.
 
     Args:
-        query (str): Description of the code requirements.
+        query (str): A description of the code to generate, including
+            requirements, functionality, programming language, or any
+            specific constraints.
 
     Returns:
-        str: Generated source code based on the provided requirements.
+        str: The generated code as a string.
     """
-    return f"Code Generator Tool Activated.\n\nCode Generation Request: {query}"
+    return f"Code Generation Request: {query}"
 
 
 @tool("Code_Reviewer")
-def Code_Reviewer(query: str):
+def Code_Reviewer(query: str) -> str:
     """
-    Tool Name: Code_Reviewer
+    Analyze code and provide a comprehensive review.
 
-    Use this tool to review source code and provide feedback on
-    code quality, best practices, performance, readability, and
-    potential issues.
-
-    When to use:
-    - User requests a code review.
-    - User wants feedback on existing code.
-    - User asks for optimization suggestions.
-    - User wants best practice recommendations.
+    Use this tool when you need to identify bugs, code smells,
+    security vulnerabilities, performance bottlenecks, style issues,
+    or opportunities for refactoring in a code snippet.
 
     Args:
-        query (str): Source code or code review request.
+        query (str): The code to review and any relevant context.
 
     Returns:
-        str: Detailed code review feedback and recommendations.
+        str: Review findings, improvement recommendations, and
+        suggested code changes.
     """
-    return f"Code Reviewer Tool Activated.\n\nCode Review Request: {query}"
+    return f"Code Review Request: {query}"
 
 
 @tool("Debugger")
-def Debugger(query: str):
+def Debugger(query: str) -> str:
     """
-    Tool Name: Debugger
+    Diagnose and resolve programming errors.
 
-    Use this tool to identify, analyze, and resolve errors in source code.
-
-    When to use:
-    - User reports an error or exception.
-    - User wants help fixing a bug.
-    - User provides stack traces or error messages.
-    - User requests debugging assistance.
+    Use this tool when code produces errors, fails tests,
+    behaves unexpectedly, or requires troubleshooting.
+    Analyze the provided code, logs, stack traces, or
+    issue description and recommend solutions.
 
     Args:
-        query (str): Source code, error message, or debugging request.
+        query (str): Code, error output, stack trace, logs,
+            or a description of the bug.
 
     Returns:
-        str: Debugging analysis, identified issues, and suggested fixes.
+        str: Root cause analysis, debugging insights,
+        and suggested fixes.
     """
-    return f"Debugger Tool Activated.\n\nDebugging Request: {query}"
+    return f"Debugging Request: {query}"

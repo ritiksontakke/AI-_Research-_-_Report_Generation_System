@@ -1,42 +1,37 @@
 from langchain.tools import tool
 
+
 @tool("Blog_Writer")
-def Blog_Writer(query: str)->str:
+def Blog_Writer(query: str) -> str:
     """
-    Tool Name: Blog_Writer
+    Create a complete blog article from a user-supplied topic or prompt.
 
-    Use this tool to generate blog posts, articles, and long-form content
-    based on a given topic or set of requirements.
-
-    When to use:
-    - User requests a blog post.
-    - User wants SEO content.
-    - User wants an article on a specific topic.
+    This tool takes a blog topic, question, or content brief and generates
+    a coherent, engaging, and informative blog post. The generated article
+    may include a title, introduction, section headings, body content, and
+    conclusion depending on the provided instructions.
 
     Args:
-        query (str): Topic, title, or instructions for the blog.
+        query (str): The blog topic, content requirements, keywords,
+            target audience, or any additional writing instructions.
 
     Returns:
-        str: A complete blog post based on the provided requirements.
+        str: The generated blog post in plain text or markdown format.
     """
-    return f"Blog Writer Tool Activated.\n\nBlog Request: {query}"
+    blog = f"# {query}\n\nThis is a sample blog article about {query}."
+    return blog
+
 
 @tool("Summarizer")
-def Summarizer(query: str):
+def Summarizer(query: str) -> str:
     """
-    Tool Name: Summarizer
-
-    Use this tool to summarize long text into concise and meaningful content.
-
-    When to use:
-    - User requests a summary.
-    - User provides lengthy text.
-    - User wants key points extracted.
+    Summarize the provided text into a concise and clear summary.
 
     Args:
-        query (str): Text content to summarize.
+        query (str): The text, article, document, or content to summarize.
 
     Returns:
-        str: A concise summary of the provided content.
+        str: A concise summary highlighting the key points and main ideas
+        from the provided content.
     """
-    return f"Summarizer Tool Activated.\n\nContent To Summarize: {query}"
+    return f"Summarize the following text in a concise manner:\n\n{query}"

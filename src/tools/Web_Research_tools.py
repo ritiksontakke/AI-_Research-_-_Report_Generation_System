@@ -1,53 +1,28 @@
 from langchain.tools import tool
 
 @tool
-def Search_Tool(query: str)->str:
+def Search_Tool(query: str) -> str:
     """
-    Perform a comprehensive web search to gather information from multiple
-    online sources.
+    Search the web for information related to the user's query.
 
-    Use this tool when you need:
-    - General information about a topic.
-    - Background research and context.
-    - Official websites, blogs, reports, documentation, or articles.
-    - Information about companies, people, products, technologies, or events.
-    - Additional sources to support research findings.
+    Args:
+        query (str): The search query or topic to look up.
 
-    This tool is typically the first step in the research process before
-    scraping specific websites or verifying information.
+    Returns:
+        str: Relevant search results, information, or extracted content
+        matching the query.
     """
-    return f"Searching the web for: {query}"
-
+    return query
 
 @tool
-def Website_Scraper(url: str):
+def News_Search(query: str) -> str:
     """
-    Retrieve and extract the main content from a specific webpage.
+    Search for recent news articles related to the user's query.
 
-    Use this tool when:
-    - A relevant URL has already been identified.
-    - Detailed information from a webpage is required.
-    - You need to analyze, summarize, or extract facts from a source.
-    - You want to collect evidence, statistics, quotes, or technical details.
+    Args:
+        query (str): The topic, keyword, or news subject to search for.
 
-    Focus on extracting meaningful content while ignoring unnecessary
-    navigation elements, advertisements, and page clutter.
+    Returns:
+        str: Relevant news information or search results related to the query.
     """
-    return f"Scraping website: {url}"
-
-
-@tool
-def News_Search(query: str):
-    """
-    Search for recent news articles, current events, and emerging developments.
-
-    Use this tool when:
-    - The user requests the latest information.
-    - Research requires up-to-date events or recent announcements.
-    - Tracking industry trends, company updates, market activity,
-      policy changes, or breaking news.
-    - Information freshness is critical to the answer.
-
-    Prioritize recent and reputable news sources whenever possible.
-    """
-    return f"Searching latest news for: {query}"
+    return query

@@ -24,7 +24,7 @@ def get_system_prompt(prompt_name: str, tag: str ="production") -> str:
 
 def get_gemini_api():
     return ChatGoogleGenerativeAI(
-        model="gemini-2.5-flash-lite",
+        model="gemini-1.5-flash",
         google_api_key=os.getenv("GOOGLE_API_KEY"),
         temperature = 0
     )
