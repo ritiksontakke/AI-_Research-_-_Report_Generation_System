@@ -1,13 +1,14 @@
 from langchain_core.tools import tool
 from langchain.agents import create_agent
-from src.tools.Content_Agent_Tools import Blog_Writer
-from src.tools.Content_Agent_Tools import Summarizer
+from src.tools.Content_Agent_Tools import blogwriter
+from src.tools.Content_Agent_Tools import summarizer
 from src.ultis import get_groq_model,get_system_prompt
 # from src.ultis import get_gemini_api,get_system_prompt
+from langchain.agents.middleware import ModelCallLimitMiddleware
 
 
 @tool
-def get_content_agent(query:str):
+def getcontentagent(query:str):
     """
     Handle content creation and summarization tasks using specialized writing tools.
 
@@ -26,8 +27,15 @@ def get_content_agent(query:str):
 
     content_agent = create_agent(
         model=get_groq_model(),
-        tools=[Blog_Writer,Summarizer],
-        system_prompt=get_system_prompt("testing")
+        tools=[blogwriter,summarizer],
+        system_prompt=get_system_prompt("testing"),
+        middleware=[
+                 ModelCallLimitMiddleware(
+                      thread_limit=10,
+                      run_limit=4,
+                      exit_behavior="end",
+                )
+            ]
     )
     result = content_agent.invoke({"messages": [{"role" :"user", "content":query}]})
     return result["messages"][-1].content

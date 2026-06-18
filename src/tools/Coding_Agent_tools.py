@@ -1,56 +1,64 @@
 from langchain.tools import tool
 
+
 @tool("Code_Generator")
-def Code_Generator(query: str) -> str:
+def codegenerator(query: str) -> str:
     """
-    Generate source code based on the user's natural language request.
+    Generate new code from a user requirement.
 
-    Args:
-        query (str): A description of the code to generate, including
-            requirements, functionality, programming language, or any
-            specific constraints.
+    Use ONLY when the user asks to:
+    - create code
+    - write code
+    - generate code
+    - build a program
 
-    Returns:
-        str: The generated code as a string.
+    Do NOT use for:
+    - code review
+    - debugging
+    - bug fixing
+
+    Return the generated code and stop.
     """
     return f"Code Generation Request: {query}"
 
 
 @tool("Code_Reviewer")
-def Code_Reviewer(query: str) -> str:
+def codereviewer(query: str) -> str:
     """
-    Analyze code and provide a comprehensive review.
+    Review existing code and provide feedback.
 
-    Use this tool when you need to identify bugs, code smells,
-    security vulnerabilities, performance bottlenecks, style issues,
-    or opportunities for refactoring in a code snippet.
+    Use ONLY when the user provides code and asks for:
+    - review
+    - optimization
+    - refactoring
+    - best practices
+    - quality improvements
 
-    Args:
-        query (str): The code to review and any relevant context.
+    Do NOT use for:
+    - generating new code
+    - debugging runtime errors
 
-    Returns:
-        str: Review findings, improvement recommendations, and
-        suggested code changes.
+    Return review feedback and stop.
     """
     return f"Code Review Request: {query}"
 
 
 @tool("Debugger")
-def Debugger(query: str) -> str:
+def debugger(query: str) -> str:
     """
-    Diagnose and resolve programming errors.
+    Analyze errors, bugs, logs, or stack traces.
 
-    Use this tool when code produces errors, fails tests,
-    behaves unexpectedly, or requires troubleshooting.
-    Analyze the provided code, logs, stack traces, or
-    issue description and recommend solutions.
+    Use ONLY when the user provides:
+    - an error message
+    - a stack trace
+    - failing code
+    - bug reports
+    - logs
 
-    Args:
-        query (str): Code, error output, stack trace, logs,
-            or a description of the bug.
+    Do NOT use for:
+    - code generation
+    - code review
 
-    Returns:
-        str: Root cause analysis, debugging insights,
-        and suggested fixes.
+    Return the root cause and suggested fix, then stop.
     """
     return f"Debugging Request: {query}"

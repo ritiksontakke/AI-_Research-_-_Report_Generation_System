@@ -2,36 +2,53 @@ from langchain.tools import tool
 
 
 @tool("Blog_Writer")
-def Blog_Writer(query: str) -> str:
+def blogwriter(query: str) -> str:
     """
-    Create a complete blog article from a user-supplied topic or prompt.
+    Generate a complete blog article.
 
-    This tool takes a blog topic, question, or content brief and generates
-    a coherent, engaging, and informative blog post. The generated article
-    may include a title, introduction, section headings, body content, and
-    conclusion depending on the provided instructions.
+    Use ONLY when the user explicitly asks for:
+    - a blog post
+    - an article
+    - long-form written content
 
-    Args:
-        query (str): The blog topic, content requirements, keywords,
-            target audience, or any additional writing instructions.
-
-    Returns:
-        str: The generated blog post in plain text or markdown format.
+    After generating the blog, return the result and stop.
+    Do not call other writing tools after using this tool.
     """
-    blog = f"# {query}\n\nThis is a sample blog article about {query}."
-    return blog
+    return f"""
+# {query}
+
+## Introduction
+This is a sample blog article about {query}.
+
+## Main Content
+Artificial Intelligence is transforming industries and changing the way people work and interact with technology.
+
+## Conclusion
+AI will continue to shape the future through innovation and automation.
+"""
 
 
 @tool("Summarizer")
-def Summarizer(query: str) -> str:
+def summarizer(query: str) -> str:
     """
-    Summarize the provided text into a concise and clear summary.
+    Summarize existing content.
 
-    Args:
-        query (str): The text, article, document, or content to summarize.
+    Use ONLY when the user explicitly requests:
+    - a summary
+    - key points
+    - a short version of text
 
-    Returns:
-        str: A concise summary highlighting the key points and main ideas
-        from the provided content.
+    Return the summary and stop.
+    Do not call Blog_Writer after using this tool.
     """
-    return f"Summarize the following text in a concise manner:\n\n{query}"
+    text = query[:300]
+
+    return f"""
+Summary:
+{text}
+
+Key Point:
+The content has been condensed into a shorter form highlighting the main ideas.
+"""
+
+print(blogwriter.name)

@@ -1,28 +1,46 @@
 from langchain.tools import tool
 
-@tool
-def Search_Tool(query: str) -> str:
+
+@tool("Search_Tool")
+def searchtool(query: str) -> str:
     """
-    Search the web for information related to the user's query.
+    Search for general information on a topic.
 
-    Args:
-        query (str): The search query or topic to look up.
+    Use ONLY when the user requests:
+    - general information
+    - explanations
+    - facts
+    - background research
+    - educational content
 
-    Returns:
-        str: Relevant search results, information, or extracted content
-        matching the query.
+    Do NOT use for:
+    - breaking news
+    - recent events
+    - current affairs
+
+    Return the search result and stop.
+    Do not call News_Search after using this tool unless the user explicitly asks for recent news.
     """
-    return query
+    return f"Search Result: {query}"
 
-@tool
-def News_Search(query: str) -> str:
+
+@tool("News_Search")
+def newssearch(query: str) -> str:
     """
-    Search for recent news articles related to the user's query.
+    Search for recent news and current events.
 
-    Args:
-        query (str): The topic, keyword, or news subject to search for.
+    Use ONLY when the user requests:
+    - latest news
+    - recent updates
+    - current events
+    - today's developments
 
-    Returns:
-        str: Relevant news information or search results related to the query.
+    Do NOT use for:
+    - general knowledge
+    - educational explanations
+    - historical information
+
+    Return the news result and stop.
+    Do not call Search_Tool after using this tool unless additional background information is explicitly required.
     """
-    return query
+    return f"News Result: {query}"

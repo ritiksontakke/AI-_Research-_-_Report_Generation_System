@@ -1,12 +1,12 @@
 from langchain.agents import create_agent
 from src.ultis import get_groq_model,get_system_prompt
 # from src.ultis import get_gemini_api,get_system_prompt
-
-from src.tools.Web_Research_tools import News_Search,Search_Tool
+from langchain.agents.middleware import ModelCallLimitMiddleware
+from src.tools.Web_Research_tools import newssearch,searchtool
 from langchain_core.tools import tool
 
 @tool
-def get_web_agent(query:str)->str:
+def getwebagent(query:str)->str:
     """
     Handle web search and news retrieval tasks using specialized search tools.
 
@@ -24,8 +24,15 @@ def get_web_agent(query:str)->str:
     """
     web_agent=create_agent(
         model=get_groq_model(),
-        tools=[News_Search,Search_Tool],
-        system_prompt=get_system_prompt("testing")
+        tools=[newssearch,searchtool],
+        system_prompt=get_system_prompt("testing"),
+        middleware=[
+                 ModelCallLimitMiddleware(
+                      thread_limit=10,
+                      run_limit=4,
+                      exit_behavior="end",
+                )
+            ]
     )
     result = web_agent.invoke({"messages": [{"role" : "user", "content" : query}]})
     return result["messages"][-1].content

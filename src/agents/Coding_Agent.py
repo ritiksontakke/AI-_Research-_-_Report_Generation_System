@@ -2,11 +2,12 @@ from langchain_core.tools import tool
 from langchain.agents import create_agent
 from src.ultis import get_groq_model, get_system_prompt
 # from src.ultis import get_gemini_api, get_system_prompt
+from langchain.agents.middleware import ModelCallLimitMiddleware
 
-from src.tools.Coding_Agent_tools import Code_Generator,Code_Reviewer,Debugger
+from src.tools.Coding_Agent_tools import codegenerator,codereviewer,debugger
 
 @tool
-def get_code_agents(query: str) -> str:
+def getcodeagents(query: str) -> str:
     """
     Coordinate multiple coding tools to solve software development tasks.
 
@@ -25,8 +26,15 @@ def get_code_agents(query: str) -> str:
     """
     coding_agent = create_agent(
         model=get_groq_model(),
-        tools=[Code_Generator, Code_Reviewer,Debugger],
-        system_prompt=get_system_prompt("testing")
+        tools=[codegenerator, codereviewer,debugger],
+        system_prompt=get_system_prompt("testing"),
+        middleware=[
+                 ModelCallLimitMiddleware(
+                      thread_limit=10,
+                      run_limit=3,
+                      exit_behavior="end",
+                )
+            ]
     )
     result = coding_agent.invoke({"messages" : [{"role" :"user", "content":query}]})
     return result["messages"][-1].content

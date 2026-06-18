@@ -5,14 +5,14 @@ from langsmith import Client
 import os
 
 
-
 load_dotenv()
 client = Client()
 
 def get_groq_model():
     return ChatGroq(
-        model="llama-3.3-70b-versatile",
+        model="llama-3.1-8b-instant",
         api_key=os.getenv("GROQ_API_KEY"),
+        max_tokens=500,
         temperature=0
     )
 
