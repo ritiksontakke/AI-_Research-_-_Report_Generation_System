@@ -1,7 +1,7 @@
 from fastapi import APIRouter
 from pydantic import BaseModel
-
 from src.agents.orchestrator_agent import get_OrchestratorAgent
+from langfuse.callback import CallbackHandler
 
 router = APIRouter()
 
@@ -17,6 +17,7 @@ def home():
 
 @router.post("/orchestrator_agent")
 def execute_agent(request: QueryRequest):
+    handler = CallbackHandler()
 
     result = orchestrator.invoke(
         {
@@ -27,7 +28,7 @@ def execute_agent(request: QueryRequest):
                 }
             ]
         },
-        config={"configurable": {"thread_id": request.thread_id}},
+        config={"configurable": {"thread_id": request.thread_id},"callbacks": [handler]},
     )
     return{
         "query": request.query,

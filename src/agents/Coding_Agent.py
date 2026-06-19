@@ -1,12 +1,12 @@
 from langchain_core.tools import tool
 from langchain.agents import create_agent
-from src.ultis import get_groq_model, get_system_prompt, get_openai_model
+from src.ultis import get_system_prompt, get_model
 # from src.ultis import get_gemini_api, get_system_prompt
 from langchain.agents.middleware import ModelCallLimitMiddleware, ToolCallLimitMiddleware
 from src.memory.store import store
 from src.tools.Coding_Agent_tools import codegenerator,codereviewer,debugger
-
-@tool
+from src.ultis import fallback
+@tool("coding_agent")
 def getcodeagents(query: str) -> str:
     """
     Coordinate multiple coding tools to solve software development tasks.
@@ -25,13 +25,14 @@ def getcodeagents(query: str) -> str:
             debugging guidance, or a combination of these.
     """
     coding_agent = create_agent(
-        model=get_openai_model(),
+        model=get_model(),
         tools=[codegenerator, codereviewer,debugger],
-        system_prompt=get_system_prompt("testing"),
+        system_prompt=get_system_prompt("Ritik Sontakke"),
         store=store,
         middleware=[
                 ModelCallLimitMiddleware(run_limit=5, exit_behavior="end"),
                 ToolCallLimitMiddleware(run_limit=10, exit_behavior="end"),
+                fallback,
             ]
     )
     result = coding_agent.invoke({"messages" : [{"role" :"user", "content":query}]})

@@ -8,3 +8,6 @@ fastapi
 python-dotenv
 langchain-groq
 langchain[openai]
+langchain-google-vertexai
+langfuse
+langfuse-langchain
