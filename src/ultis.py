@@ -6,6 +6,7 @@ from langchain_openai import ChatOpenAI
 from langsmith import Client
 import os
 from langfuse import Langfuse
+from langchain.agents.middleware import ModelFallbackMiddleware
 from langfuse import Langfuse
 # from langfuse import observe
 
@@ -19,7 +20,7 @@ def get_groq_model():
         model="llama-3.1-8b-instant",
         api_key=os.getenv("GROQ_API_KEY"),
         max_tokens=500,
-        temperature=0
+        temperature=0,
     )
 
 # def get_system_prompt(prompt_name: str, tag: str ="production") -> str:
@@ -37,6 +38,7 @@ def get_gemini_api():
 def get_openai_model():
     return ChatOpenAI(
         model="gpt-5.4-nano",
+        thinking={"type": "enabled", "budget_tokens": 5000},
         api_key=os.getenv("OPENAI_API_KEY"),
         max_tokens=500,
         temperature=0,

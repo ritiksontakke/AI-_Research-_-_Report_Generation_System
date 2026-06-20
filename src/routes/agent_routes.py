@@ -2,7 +2,7 @@ from fastapi import APIRouter
 from pydantic import BaseModel
 from src.agents.orchestrator_agent import get_OrchestratorAgent
 from langfuse.callback import CallbackHandler
-
+from fastapi.responses import StreamingResponse
 router = APIRouter()
 
 orchestrator = get_OrchestratorAgent()
@@ -35,3 +35,26 @@ def execute_agent(request: QueryRequest):
         "response" : result["messages"][-1].content
     }
 
+
+
+@router.post("/orchestrator-agent-stream")
+async def execute_agent_stream(request: QueryRequest):
+
+    def generate():
+
+        for message_chunk, metadata in orchestrator.stream(
+            {"messages": [{"role": "user", "content": request.query}]},
+            stream_mode="messages",
+            config={
+                "configurable": {
+                    "thread_id": request.thread_id
+                }
+            }
+        ):
+            if hasattr(message_chunk, "content"):
+                yield message_chunk.content
+
+    return StreamingResponse(
+        generate(),
+        media_type="text/plain"
+    )
